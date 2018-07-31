@@ -24,9 +24,22 @@ async def roll(dice:str):
 	await bot.say(result)
 
 @bot.command()
-async def play(game:str):
+async def play(ptype:str,game:str):
 	"""Sets the game being played"""
-	await bot.change_presence(game=discord.Game(name=game))
+	if ptype == "playing":
+		pint = 0
+	elif ptype == "streaming":
+		pint = 1
+	elif ptype == "listening":
+		ptype = "listening to"
+		pint = 2
+	elif ptype == "watching":
+		pint = 3
+	else:
+		await bot.say("Usage: `/play <type> <name>` where type is one of playing, streaming, listening and watching")
+		return
+	await bot.change_presence(game=discord.Game(name=game,type=ptype))
+	await bot.say("Now {} {}".format(ptype,game))
 
 if __name__=="__main__":
 	try:
