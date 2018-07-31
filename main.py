@@ -10,7 +10,7 @@ bot = commands.Bot(command_prefix='/')
 async def on_ready():
 	print('Logged in as',bot.user.name)
 	print('-'*10)
-	bot.change_presence(game=discord.Game(name="Meh",type=2))
+	await bot.change_presence(game=discord.Game(name="Meh",type=2))
 
 @bot.command()
 async def roll(dice:str):
@@ -22,6 +22,11 @@ async def roll(dice:str):
 		return
 	result = ', '.join(str(random.randint(1,limit)) for r in range(rolls))
 	await bot.say(result)
+
+@bot.command()
+async def play(game:str):
+	"""Sets the game being played"""
+	await bot.change_presence(game=discord.Game(name=game))
 
 if __name__=="__main__":
 	try:
