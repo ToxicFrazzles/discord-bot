@@ -38,7 +38,7 @@ async def play(ptype:str,game:str):
 	else:
 		await bot.say("Usage: `/play <type> <name>` where type is one of playing, streaming, listening and watching")
 		return
-	await bot.change_presence(game=discord.Game(name=game,type=ptype))
+	await bot.change_presence(game=discord.Game(name=game,type=pint))
 	await bot.say("Now {} {}".format(ptype,game))
 
 if __name__=="__main__":
