@@ -10,36 +10,36 @@ bot = commands.Bot(command_prefix='/')
 async def on_ready():
 	print('Logged in as',bot.user.name)
 	print('-'*10)
-	await bot.change_presence(game=discord.Game(name="Meh",type=2))
+	await bot.change_presence(activity=discord.Activity(name="The Grim Adventures of Billy and Mandy",type=discord.ActivityType.watching))
 
 @bot.command()
-async def roll(dice:str):
+async def roll(ctx,dice:str):
 	"""Rolls dice in NdN format"""
 	try:
 		rolls,limit = map(int, dice.split('d'))
 	except Exception:
-		await bot.say('Format has to be NdN!')
+		await ctx.send('Format has to be NdN!')
 		return
 	result = ', '.join(str(random.randint(1,limit)) for r in range(rolls))
-	await bot.say(result)
+	await ctx.send(result)
 
 @bot.command()
-async def play(ptype:str,game:str):
+async def play(ctx,ptype:str,*,game:str):
 	"""Sets the game being played"""
 	if ptype == "playing":
-		pint = 0
+		actype = discord.ActivityType.playing
 	elif ptype == "streaming":
-		pint = 1
+		actype = discord.ActivityType.streaming
 	elif ptype == "listening":
 		ptype = "listening to"
-		pint = 2
+		actype = discord.ActivityType.listening
 	elif ptype == "watching":
-		pint = 3
+		actype = discord.ActivityType.watching
 	else:
-		await bot.say("Usage: `/play <type> <name>` where type is one of playing, streaming, listening and watching")
+		await ctx.send("Usage: `/play <type> <name>` where type is one of playing, streaming, listening and watching")
 		return
-	await bot.change_presence(game=discord.Game(name=game,type=pint))
-	await bot.say("Now {} {}".format(ptype,game))
+	await bot.change_presence(activity=discord.Activity(name=game,type=actype))
+	await ctx.send("Now {} {}".format(ptype,game))
 
 if __name__=="__main__":
 	try:
