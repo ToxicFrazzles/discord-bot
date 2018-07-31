@@ -4,7 +4,7 @@ import asyncio
 import random
 import os
 
-bot = commands.Bot(command_prefix='/')
+bot = commands.AutoShardedBot(command_prefix='/')
 
 @bot.event
 async def on_ready():

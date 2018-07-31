@@ -4,7 +4,7 @@ A discord bot written in python for python3
 
 ###### Requirements
 * Python 3 (Tested on 3.5)
-* Discord.py https://github.com/Rapptz/discord.py
+* Discord.py rewrite https://github.com/Rapptz/discord.py/tree/rewrite
   * Discord.py's requirements
 ###### ToDo
 - [ ] Voice channel audio playback
