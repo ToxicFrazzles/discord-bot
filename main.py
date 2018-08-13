@@ -3,6 +3,8 @@ from discord.ext import commands
 import asyncio
 import random
 import os
+from time import sleep
+import json
 
 bot = commands.AutoShardedBot(command_prefix='/')
 persistent_cogs = ["owner"]
@@ -13,7 +15,8 @@ async def on_ready():
 	print('-'*10)
 	acname = "The Grim Adventures of Billy and Mandy"
 	actype = discord.ActivityType.watching
-	await bot.change_presence(activity=discord.Activity(name=acname,type=actype))
+	activity = discord.Activity(name=acname,type=actype)
+	await bot.change_presence(activity=activity)
 
 
 
@@ -31,4 +34,15 @@ if __name__=="__main__":
 		except Exception as e:
 			exc = '{}: {}'.format(type(e).__name__,e)
 			print('Failed to load extension {}\n{}'.format(cog, exc))
-	bot.run(token)
+	try:
+		with open("data/Owner/settings.json") as f:
+			owner_settings = json.load(f)
+		cogs = owner_settings['cogs']
+		for cog in cogs:
+			bot.load_extension("cogs."+cog)
+	except FileNotFoundError:
+		pass
+	except Exception as e:
+		print("Failed to load some of the cogs that were last used")
+		print(type(e),str(e))
+	bot.run(token,bot=True,reconnect=True)

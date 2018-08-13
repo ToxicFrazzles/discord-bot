@@ -110,3 +110,4 @@ venv.bak/
 *.lock
 *.tmp
 /token.txt
+data/
