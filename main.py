@@ -19,7 +19,6 @@ async def on_ready():
 	await bot.change_presence(activity=activity)
 
 
-
 if __name__=="__main__":
 	try:
 		with open("token.txt","r") as f:

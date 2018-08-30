@@ -39,6 +39,10 @@ class Owner:
 			await ctx.send("```py\n{}: {}\n```".format(type(e).__name__, str(e)))
 			return
 		await ctx.send("{} loaded.".format(extension_name))
+	@load.error
+	async def load_error(ctx,error):
+		if isinstance(error,commands.ModuleNotFoundError):
+			await ctx.send("I could not find that module")
 	
 	@commands.command()
 	async def unload(self,ctx,extension_name:str):
@@ -50,6 +54,10 @@ class Owner:
 		if "cogs" in self.settings and extension_name in self.settings['cogs']:
 			self.settings['cogs'].remove(extension_name)
 		await ctx.send("{} unloaded.".format(extension_name))
+	@unload.error
+	async def unload_error(ctx,error):
+		if isinstance(error,commands.ModuleNotFoundError):
+			await ctx.send("I could not find that module")
 	
 	@commands.command()
 	async def reload(self,ctx,extension_name:str):
